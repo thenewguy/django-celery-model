@@ -235,6 +235,12 @@ def handle_task_postrun(sender=None, task_id=None, state=None, **kwargs):
 
 @signals.task_success.connect
 def handle_task_success(sender=None, result=None, **kwargs):
+    print(sender)
+    print("%r"%sender)
+    print(result)
+    print("%r"%result)
+    print(kwargs)
+    print("%r"%kwargs)
     queryset = ModelTaskMeta.objects.filter(task_id=result.id)
     queryset.update(state=ModelTaskMetaState.SUCCESS)
 
