@@ -11,7 +11,7 @@ from django.test import TestCase, TransactionTestCase
 from django.utils import timezone
 
 from djcelery_model.models import ModelTaskMeta, TaskMixin, perform_update
-from djcelery_model.signals import post_update
+from djcelery_model.signals import post_bulk_update
 from djcelery_model.tests import celery_app
 
 from .models import JPEGFile
@@ -29,10 +29,10 @@ def catch_signal(signal):
 
 class SignalTests(TestCase):
     @mock.patch('django.utils.timezone.now')
-    def test_post_update(self, mocked_now):
+    def test_post_bulk_update(self, mocked_now):
         updated_at = datetime.datetime(2020, 7, 5, tzinfo=timezone.utc)
         mocked_now.return_value = updated_at
-        with catch_signal(post_update) as handler:
+        with catch_signal(post_bulk_update) as handler:
             perform_update('a-task-id', state=1)
         handler.assert_called_once_with(
             sender=ModelTaskMeta,
@@ -42,7 +42,7 @@ class SignalTests(TestCase):
                 state=1,
                 updated=updated_at,
             ),
-            signal=post_update,
+            signal=post_bulk_update,
         )
 
 

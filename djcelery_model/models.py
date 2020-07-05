@@ -26,7 +26,7 @@ from celery.result import AsyncResult
 from celery.utils import uuid
 from celery import signals
 
-from .signals import post_update
+from .signals import post_bulk_update
 
 
 class ModelTaskMetaState(object):
@@ -226,7 +226,7 @@ def forget_if_ready(async_result):
 def perform_update(task_id, **kwargs):
     kwargs.setdefault('updated', timezone.now())
     count = ModelTaskMeta.objects.filter(task_id=task_id).update(**kwargs)
-    post_update.send(sender=ModelTaskMeta, task_id=task_id, count=count, update_kwargs=kwargs)
+    post_bulk_update.send(sender=ModelTaskMeta, task_id=task_id, count=count, update_kwargs=kwargs)
 
 
 @signals.after_task_publish.connect
