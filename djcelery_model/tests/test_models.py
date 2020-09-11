@@ -10,7 +10,7 @@ from celery import states
 
 from ..models import ModelTaskMeta, ModelTaskMetaState
 from .base import CeleryTestCase
-from .testapp.models import JPEGFile
+from .testapp.models import AnyIntegerId, JPEGFile
 from .testapp.tasks import forced_failure, retry_forever, sleep_for_success
 
 
@@ -36,6 +36,11 @@ class ModelTaskMetaTests(SetUpMixin, TestCase):
     def test_task_id_not_unique_per_relation_id(self):
         ModelTaskMeta.objects.create(content_object=self.site_a, task_id='foo')
         ModelTaskMeta.objects.create(content_object=self.record, task_id='foo')
+    
+    def test_negative_integer_id(self):
+        instance = AnyIntegerId.objects.create(id=-88)
+        taskmeta = ModelTaskMeta.objects.create(content_object=instance, task_id='foo')
+        taskmeta.full_clean()
 
 
 class MultiModelStateUpdateTests(SetUpMixin, CeleryTestCase):

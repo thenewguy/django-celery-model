@@ -88,7 +88,7 @@ class ModelTaskMeta(models.Model):
     )
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    object_id = models.IntegerField()
     content_object = GenericForeignKey()
     task_id = models.CharField(max_length=255, db_index=True)
     state = models.PositiveIntegerField(choices=STATES,

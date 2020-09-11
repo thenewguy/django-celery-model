@@ -22,4 +22,13 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
         ),
+        migrations.CreateModel(
+            name='AnyIntegerId',
+            fields=[
+                ('id', models.IntegerField(primary_key=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
     ]
