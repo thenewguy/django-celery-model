@@ -15,4 +15,4 @@ install:
   - "pip install -r requirements.txt -r dev-requirements.txt tox tox-docker"
   - "pip install ."
 
-script: tox -vv -e $TOX_ENV -- -v 2
+script: tox -vv -e $TOX_ENV -- python runtests.py --noinput --keepdb -v 2
