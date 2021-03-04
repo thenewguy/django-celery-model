@@ -4,15 +4,15 @@ matrix:
   include:
     - env: TOX_ENV=py36
       python: 3.6
-      dist: bionic
+      dist: focal
       sudo: true
     - env: TOX_ENV=py37
       python: 3.7
-      dist: bionic
+      dist: focal
       sudo: true
     - env: TOX_ENV=py38
       python: 3.8
-      dist: bionic
+      dist: focal
       sudo: true
 
 install:
