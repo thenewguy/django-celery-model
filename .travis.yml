@@ -1,19 +1,15 @@
 language: python
 cache: pip
+dist: focal
+sudo: true
 matrix:
   include:
     - env: TOX_ENV=py36
       python: 3.6
-      dist: focal
-      sudo: true
     - env: TOX_ENV=py37
       python: 3.7
-      dist: focal
-      sudo: true
     - env: TOX_ENV=py38
       python: 3.8
-      dist: focal
-      sudo: true
 
 install:
   - "pip install -U pip"
