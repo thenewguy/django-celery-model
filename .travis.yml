@@ -8,6 +8,8 @@ matrix:
       sudo: true
     - env: TOX_ENV=py38
       python: 3.8
+      dist: bionic
+      sudo: true
 
 install:
   - "pip install -U pip"
