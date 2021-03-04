@@ -54,21 +54,24 @@ MEDIA_ROOT = os.path.join(ROOT_DIR, 'test-media')
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 
+POSTGRES_USER = os.getenv('POSTGRES_USER', 'postgres')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pgdb',
-        'USER': 'pguser',
-        'PASSWORD': 'pgpass',
+        'NAME': os.getenv('POSTGRES_DB', POSTGRES_USER),
+        'USER': POSTGRES_USER,
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
         'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
         'PORT': os.getenv('POSTGRES_5432_TCP_PORT', '5432'),
     }
 }
 
-REDIS_PORT = os.getenv('REDIS_6379_TCP_PORT', 'port-missing-from-env')
-
-CELERY_BROKER_URL = 'redis://localhost:%s/0' % REDIS_PORT
-CELERY_RESULT_BACKEND = 'redis://localhost:%s/2' % REDIS_PORT
+REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+REDIS_PORT = os.getenv('REDIS_6379_TCP_PORT', '6379')
+REDIS_LOCATION = '%s:%s' % (REDIS_HOST, REDIS_PORT)
+CELERY_BROKER_URL = 'redis://%s/0' % REDIS_LOCATION
+CELERY_RESULT_BACKEND = 'redis://%s/2' % REDIS_LOCATION
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_SEND_SENT_EVENT = True
 CELERY_SEND_EVENTS = True
